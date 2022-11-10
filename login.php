@@ -5,7 +5,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     if ($db->dbConnect()) {
         if ($db->logIn("users", $_POST['email'], $_POST['password'])) {
             echo "Login Success";
-        } else echo "Email or Password wrong";
+        } else echo "Email ou mot de passe incorrect";
     } else echo "Error: Database connection";
 } else echo "All fields are required";
 ?>
