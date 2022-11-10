@@ -67,6 +67,24 @@ class DataBase
         } else return false;
     }
 
+    function getExercices($table)
+    {
+        $this->sql = "select * from " . $table;
+        if($result = mysqli_query($this->connect, $this->sql)){
+            while($row = $result->fetch_assoc()){
+                echo $row["id"];
+                echo $row["nom"];
+                echo $row["muscle"];
+                echo $row["description"];
+                echo "<br>";
+                $exo = new Exercice($row["id"], $row["nom"], $row["muscle"], $row["description"]);
+                //echo json_encode($exo);
+            }
+            return true;
+        }
+        return false;
+    }
+
 }
 
 ?>

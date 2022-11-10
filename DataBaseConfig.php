@@ -12,7 +12,7 @@ class DataBaseConfig
     {
 
         $this->servername = 'localhost';
-        $this->username = 'admin';
+        $this->username = 'root';
         $this->password = 'dspock01';
         $this->databasename = 'juicyMuscles';
         $this->port = 3306;
