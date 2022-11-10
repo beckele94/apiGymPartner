@@ -1,5 +1,6 @@
 <?php
 require "DataBaseConfig.php";
+require "Exercice.php";
 
 class DataBase
 {
@@ -28,6 +29,7 @@ class DataBase
     function dbConnect()
     {
         $this->connect = mysqli_connect($this->servername, $this->username, $this->password, $this->databasename, $this->port);
+        mysqli_query($this->connect, "SET character_set_results=utf8");
         return $this->connect;
     }
 
@@ -71,15 +73,11 @@ class DataBase
     {
         $this->sql = "select * from " . $table;
         if($result = mysqli_query($this->connect, $this->sql)){
+            $listExo = array();
             while($row = $result->fetch_assoc()){
-                echo $row["id"];
-                echo $row["nom"];
-                echo $row["muscle"];
-                echo $row["description"];
-                echo "<br>";
-                $exo = new Exercice($row["id"], $row["nom"], $row["muscle"], $row["description"]);
-                //echo json_encode($exo);
+                $listExo[] = new Exercice($row["id"], $row["nom"], $row["muscle"], $row["description"]);
             }
+            echo json_encode($listExo); //flags utiles pour accents : JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
             return true;
         }
         return false;
