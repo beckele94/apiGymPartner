@@ -1,6 +1,7 @@
 <?php
 require "DataBaseConfig.php";
 require "Exercice.php";
+require "Programme.php";
 
 class DataBase
 {
@@ -83,6 +84,20 @@ class DataBase
         return false;
     }
 
+    function getProgrammes($table, $idUser)
+    {
+        $idUser = $this->prepareData($idUser);
+        $this->sql = "select * from " . $table . " where iduser = " . $idUser;
+        if($result = mysqli_query($this->connect, $this->sql)){
+            $listProgramme = array();
+            while ($row = $result->fetch_assoc()){
+                $listProgramme[] = new Programme($row["id"], $row["iduser"], $row["nom"]);
+            }
+            echo json_encode($listProgramme);
+            return true;
+        }
+        return false;
+    }
 }
 
 ?>
