@@ -2,6 +2,7 @@
 require "DataBaseConfig.php";
 require "Exercice.php";
 require "Programme.php";
+require "User.php";
 
 class DataBase
 {
@@ -70,6 +71,23 @@ class DataBase
         } else return false;
     }
 
+    function getUser($table, $email)
+    {
+        $email = $this->prepareData($email);
+        $this->sql = "select * from " . $table . " where email = '" . $email ."'";
+        if($result = mysqli_query($this->connect, $this->sql)){
+            $row = mysqli_fetch_assoc($result);
+            if (mysqli_num_rows($result) != 0) {
+                $user = new User($row["id"], $row["username"], $row["email"]);
+            }
+            echo json_encode($user);
+            return true;
+        }
+        return false;
+    }
+
+    //TODO: addExercice (rajouter une colonne idUser à exercices), deleteExercice, getExoPgrm, addExoPgrm, deleteExoPgrm
+
     function getExercices($table)
     {
         $this->sql = "select * from " . $table;
@@ -98,6 +116,23 @@ class DataBase
         }
         return false;
     }
-}
 
-?>
+    function addProgramme($table, $idUser, $nom)
+    {
+        $idUser = $this->prepareData($idUser);
+        $nom = $this->prepareData($nom);
+        $this->sql = "INSERT INTO " . $table . " (iduser, nom) VALUES (" . $idUser . ",'" . $nom . "')";
+        if(mysqli_query($this->connect, $this->sql)) {
+            return true;
+        } else return false;
+    }
+
+    function deleteProgramme($table, $id)
+    {
+        $id = $this->prepareData($id);
+        $this->sql = "delete from " . $table . " where id = " . $id;
+        if(mysqli_query($this->connect, $this->sql)) {
+            return true;
+        } else return false;
+    }
+}

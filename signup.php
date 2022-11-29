@@ -8,4 +8,3 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
         } else echo "L'inscription a échouée";
     } else echo "Error: Database connection";
 } else echo "All fields are required";
-?>
