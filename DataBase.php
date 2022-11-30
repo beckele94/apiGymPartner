@@ -3,6 +3,7 @@ require "DataBaseConfig.php";
 require "Exercice.php";
 require "Programme.php";
 require "User.php";
+require "ExoPgrm.php";
 
 class DataBase
 {
@@ -86,7 +87,7 @@ class DataBase
         return false;
     }
 
-    //TODO: addExercice (rajouter une colonne idUser à exercices), deleteExercice, getExoPgrm, addExoPgrm, deleteExoPgrm
+    //TODO: addExercice (rajouter une colonne idUser à exercices), deleteExercice, addExoPgrm, deleteExoPgrm, modifyExoPgrm
 
     function getExercices($table)
     {
@@ -132,6 +133,31 @@ class DataBase
         $id = $this->prepareData($id);
         $this->sql = "delete from " . $table . " where id = " . $id;
         if(mysqli_query($this->connect, $this->sql)) {
+            return true;
+        } else return false;
+    }
+
+    function getExoPgrm($table, $idPgrm)
+    {
+        $idPgrm = $this->prepareData($idPgrm);
+        $this->sql = "select * from " . $table . " where idpgrm = " . $idPgrm;
+        if($result = mysqli_query($this->connect, $this->sql)){
+            $listExoPgrm = array();
+            while ($row = $result->fetch_assoc()){
+                $listExoPgrm[] = new ExoPgrm($row["id"], $row["idpgrm"], $row["idexo"], $row["nbserie"], $row["nbrep"], $row["tempsrepos"]);
+            }
+            echo json_encode($listExoPgrm);
+            return true;
+        }
+        return false;
+    }
+
+    function addExoPgrm($table, $idExo, $idPgrm)
+    {
+        $idExo = $this->prepareData($idExo);
+        $idPgrm = $this->prepareData($idPgrm);
+        $this->sql = "INSERT INTO $table (idexo, idpgrm) VALUES ($idExo,$idPgrm)";
+        if (mysqli_query($this->connect, $this->sql)) {
             return true;
         } else return false;
     }
