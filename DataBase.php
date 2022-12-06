@@ -16,6 +16,8 @@ class DataBase
     protected $databasename;
     protected $port;
 
+    //TODO: addExercice (rajouter une colonne idUser à exercices), deleteExercice, addExoPgrm, deleteExoPgrm, modifyExoPgrm
+
     public function __construct()
     {
         $this->connect = null;
@@ -87,8 +89,6 @@ class DataBase
         return false;
     }
 
-    //TODO: addExercice (rajouter une colonne idUser à exercices), deleteExercice, addExoPgrm, deleteExoPgrm, modifyExoPgrm
-
     function getExercices($table)
     {
         $this->sql = "select * from " . $table;
@@ -158,6 +158,15 @@ class DataBase
         $idPgrm = $this->prepareData($idPgrm);
         $this->sql = "INSERT INTO $table (idexo, idpgrm) VALUES ($idExo,$idPgrm)";
         if (mysqli_query($this->connect, $this->sql)) {
+            return true;
+        } else return false;
+    }
+
+    function deleteExoPgrm($table, $id)
+    {
+        $id = $this->prepareData($id);
+        $this->sql = "delete from " . $table . " where id = " . $id;
+        if(mysqli_query($this->connect, $this->sql)) {
             return true;
         } else return false;
     }
