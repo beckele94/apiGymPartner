@@ -144,7 +144,7 @@ class DataBase
         if($result = mysqli_query($this->connect, $this->sql)){
             $listExoPgrm = array();
             while ($row = $result->fetch_assoc()){
-                $listExoPgrm[] = new ExoPgrm($row["id"], $row["idpgrm"], $row["idexo"], $row["nbserie"], $row["nbrep"], $row["tempsrepos"]);
+                $listExoPgrm[] = new ExoPgrm($row["id"], $row["idpgrm"], $row["idexo"], $row["nbserie"], $row["nbrep"], $row["tempsrepos"], $row["poids"]);
             }
             echo json_encode($listExoPgrm);
             return true;

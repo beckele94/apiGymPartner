@@ -5,17 +5,19 @@ class ExoPgrm
     public $id;
     public $idPgrm;
     public $idExo;
-    public $nbserie;
-    public $nbrep;
+    public $nbSerie;
+    public $nbRep;
     public $tempsRepos;
+    public $poids;
 
-    public function __construct($id, $idPgrm, $idExo, $nbserie, $nbrep, $tempsRepos)
+    public function __construct($id, $idPgrm, $idExo, $nbserie, $nbrep, $tempsRepos, $poids)
     {
         $this->id = $id;
         $this->idPgrm = $idPgrm;
         $this->idExo = $idExo;
-        $this->nbserie = $nbserie;
-        $this->nbrep = $nbrep;
+        $this->nbSerie = $nbserie;
+        $this->nbRep = $nbrep;
         $this->tempsRepos = $tempsRepos;
+        $this->poids = $poids;
     }
 }
